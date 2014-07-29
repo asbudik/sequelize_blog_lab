@@ -10,7 +10,7 @@
     </form>
     <ul>
       <% authors.forEach(function(author) {%>
-        <li><%= author.dataValues.name %></li>
+        <li><%= author.dataValues.name %> <%= author.dataValues.id %></li>
     <% }) %>
     </ul>
   </body>

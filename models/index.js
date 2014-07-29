@@ -27,8 +27,8 @@ Object.keys(db).forEach(function(modelName) {
 //   console.log(author);
 // })
 
-db.author.hasMany(db.posts);
-db.posts.belongsTo(db.author);
+db.author.hasMany(db.post, {foreignKey: db.author.id});
+db.post.belongsTo(db.author, {foreignKey: db.post.authorId});
 
 // db.author.find(1).success(function(author){
 //     var posts = db.posts.build({name: "Fantasmo"})

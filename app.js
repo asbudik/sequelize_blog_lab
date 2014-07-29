@@ -22,10 +22,10 @@ app.get("/", function(req, res){
 app.post("/", function(req, res) {
   console.log(req.body.author)
   db.author.findOrCreate({name: req.body.author}).success(function(author){
-    var posts = db.posts.build({name: req.body.posts})
-    author.setPosts([posts])
+    var posts = db.post.build({name: req.body.posts})
+    author.setPosts([post])
       .success(function(author){
-        posts.save();
+        post.save();
        console.log(author)
     })
   });
