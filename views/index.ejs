@@ -1,0 +1,17 @@
+<!DOCTYPE>
+<html>
+  <head>
+  </head>
+  <body>
+    <form method="post" action="/">
+      <input type="text" name="author" placeholder="author"></input>
+      <input type="text" name="posts" placeholder="post"></input>
+      <input type="submit"></input>
+    </form>
+    <ul>
+      <% authors.forEach(function(author) {%>
+        <li><%= author.dataValues.name %></li>
+    <% }) %>
+    </ul>
+  </body>
+</html>
