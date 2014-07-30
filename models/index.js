@@ -27,8 +27,22 @@ Object.keys(db).forEach(function(modelName) {
 //   console.log(author);
 // })
 
-db.author.hasMany(db.post, {foreignKey: db.author.id});
-db.post.belongsTo(db.author, {foreignKey: db.post.authorId});
+// db.author.find(1).success(function(foundAuthor) {
+//   var newPost = db.post.build({title: "The Great"});
+//   foundAuthor.setPosts([newPost]).success(function() {
+//     newPost.save();
+//   });
+// });
+
+// db.author.find(1).success(function(foundAuthor){
+//   var newPost = db.post.build({title: "hello worlds again!"});
+//   foundAuthor.addPost(newPost).success(function(){
+//     newPost.save()
+//   })
+// });
+
+// addPost adds foreign key
+// setPost is destructive
 
 // db.author.find(1).success(function(author){
 //     var posts = db.posts.build({name: "Fantasmo"})

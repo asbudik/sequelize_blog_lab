@@ -1,7 +1,18 @@
 function Author(sequelize, DataTypes){
-  return sequelize.define('author', {
-    name: DataTypes.STRING
-  });
-};
+
+  /* sequelize.define(modelName, attributes, options); */
+  var Author = sequelize.define('author',{
+    firstname: DataTypes.STRING,
+    lastname: DataTypes.STRING
+  },
+    {
+      classMethods: {
+        associate: function(db) {
+          Author.hasMany(db.post);
+        }
+      }
+    })
+ return Author;
+}
 
 module.exports = Author;

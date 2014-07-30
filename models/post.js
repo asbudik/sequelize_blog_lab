@@ -1,7 +1,18 @@
 function Post(sequelize, DataTypes){
-  return sequelize.define('post', {
-    name: DataTypes.STRING
-  });
+  /* sequelize.define(modelName, attributes, options); */
+
+  var Post = sequelize.define('post', {
+    title: DataTypes.STRING,
+    body: DataTypes.TEXT
+  },
+    {
+      classMethods: {
+        associate: function(db) {
+          Post.belongsTo(db.author);
+        }
+      }
+    });
+  return Post;
 };
 
 
