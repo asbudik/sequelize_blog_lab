@@ -19,13 +19,13 @@ app.get('/authors/new_author', function(req, res) {
 })
 
 app.get('/authors', function(req, res) {
-  db.author.findAll({order: 'createdAt ASC'}).success(function(allAuthors) {
+  db.author.findAll({order: [['createdAt', 'DESC']]}).success(function(allAuthors) {
     res.render('authors/index', {authors: allAuthors});
   });
 });
 
 app.get('/blogs', function(req, res) {
-  db.post.findAll({order: 'createdAt ASC'}).success(function(allPosts) {
+  db.post.findAll({order: [['createdAt', 'DESC']]}).success(function(allPosts) {
     res.render('posts/index', {posts: allPosts});
   });
 });
