@@ -2,7 +2,7 @@
 
 <h2 class="subtitle">New Post</h2>
 <form class="editform" method="POST" action="/authors/<%= author.dataValues.id %>/posts">
-  <input class="edittitle" type="text" name="post[title]"><br>
+  <input class="edittitle" type="text" name="post[title]" placeholder="Blog Title"><br>
   <textarea class="editbody" name="post[body]">
   </textarea><br>
   <button class="btn btn-danger authorbtn"> SAVE POST </button>
