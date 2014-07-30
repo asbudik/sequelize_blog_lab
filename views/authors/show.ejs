@@ -1,14 +1,17 @@
 <%- include ../__header.ejs %>
 
-<h2> <%= author.dataValues.firstname %></h2>
+<h2 class="subtitle">Author Details</h2>
 
+<div class="allblogs">
+<h2> <%= author.dataValues.firstname %></h2>
 <ul>
   <% posts.forEach(function(post){ %>
-    <li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li>
+    <h3 class="allauthorposts"><li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li></h3>
   <% }) %>
 </ul>
 
-<a href="/authors/<%= author.dataValues.id %>/posts/new">Write a post for <%= author.dataValues.firstname %> </a>
+ <a href="/authors/<%= author.dataValues.id %>/posts/new"><button class="btn btn-danger"> New Post </button></a>
 
-<form class="delete" method="post" action="/authors/<%= author.dataValues.id %>?_method=delete"><button>Delete</button></form>
+<form class="delete" method="post" action="/author/<%= author.dataValues.id %>?_method=delete"><button class="btn btn-danger">Delete <%= author.dataValues.firstname %></button></form>
+</div>
 <%- include ../__footer.ejs %>

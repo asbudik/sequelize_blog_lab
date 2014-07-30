@@ -1,10 +1,11 @@
 <%- include ../__header.ejs %>
 
-<h2>All Blogs:</h2>
-<ul>
+<h2 class="subtitle">All Blogs</h2>
+<div class="all"><ul>
   <% posts.forEach(function(post){ %>
-    <li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li>
+    <h1 class="generatelist"><li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li></h1>
   <% }) %>
 </ul>
+</div>
 
 <%- include ../__footer.ejs %>

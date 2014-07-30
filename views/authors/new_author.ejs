@@ -1,9 +1,11 @@
 <%- include ../__header.ejs %>
 
-<form method="post" action="/authors">
-  <input type="text" name="author[firstname]"></input>
-  <input type="text" name="author[lastname]"></input></br>
-  <button> "Author"ize!! </button>
+<h2 class="subtitle">Become an author</h2>
+
+<form class="editform" method="post" action="/authors">
+  <input class="edittitle" type="text" name="author[firstname]" placeholder="First Name"></input>
+  <input class="edittitle" type="text" name="author[lastname]" placeholder="Last Name"></input></br>
+  <button class="btn btn-danger authorbtn"> Authorize! </button>
 </form>
 
 <%- include ../__footer.ejs %>

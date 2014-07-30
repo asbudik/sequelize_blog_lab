@@ -1,12 +1,13 @@
 <%- include ../__header.ejs %>
+<h2 class="subtitle">Blog Details</h2>
 
-<h2> <%= post.dataValues.title %> <h2>
-<p>
-  <%= post.dataValues.body %>
-</p>
+<div class="allblogs">
+  <h2> <%= post.dataValues.title %> </h2>
+  <p>
+    <%= post.dataValues.body %>
+  </p>
 
-<form class="delete" method="post" action="/posts/<%= post.dataValues.id %>?_method=delete"><button>Delete</button></form>
-
-<a href="/posts/<%= post.dataValues.id %>/edit"><button>Edit</button></form>
-
+  <a class="editblog" href="/posts/<%= post.dataValues.id %>/edit"><button class="btn btn-danger">Edit Post</button>
+  <form method="post" action="/posts/<%= post.dataValues.id %>?_method=delete"><button class="btn btn-danger delete-button">DELETE</button></form>
+</div>
 <%- include ../__footer.ejs %>
