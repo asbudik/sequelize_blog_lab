@@ -10,4 +10,5 @@
 
 <a href="/authors/<%= author.dataValues.id %>/posts/new">Write a post for <%= author.dataValues.firstname %> </a>
 
-<%- include ../__header.ejs %>
+<form class="delete" method="post" action="/authors/<%= author.dataValues.id %>?_method=delete"><button>Delete</button></form>
+<%- include ../__footer.ejs %>

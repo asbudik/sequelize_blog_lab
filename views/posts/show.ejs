@@ -5,4 +5,8 @@
   <%= post.dataValues.body %>
 </p>
 
-<%- include ../__header.ejs %>
+<form class="delete" method="post" action="/posts/<%= post.dataValues.id %>?_method=delete"><button>Delete</button></form>
+
+<a href="/posts/<%= post.dataValues.id %>/edit"><button>Edit</button></form>
+
+<%- include ../__footer.ejs %>

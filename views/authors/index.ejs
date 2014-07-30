@@ -1,10 +1,10 @@
 <%- include ../__header.ejs %>
 
-All Authors:
+<h2>All Authors:</h2>
 <ul>
   <% authors.forEach(function(author){ %>
-    <li> <a href="/authors/<%= author.dataValues.id %>" ><%= author.dataValues.firstname %></a></li>
+    <li> <a href="/authors/<%= author.dataValues.id %>" ><%= author.dataValues.firstname %> <%= author.dataValues.lastname %></a></li>
   <% }) %>
 </ul>
 
-<%- include ../__header.ejs %>
+<%- include ../__footer.ejs %>

@@ -1,0 +1,9 @@
+<%- include ../__header.ejs %>
+
+<form method="post" action="/posts/<%= post.dataValues.id %>?_method=put">
+  <input type="text" name="post[title]" value="<%= post.dataValues.title %>">
+  <textarea name="post[body]"><%= post.dataValues.body %></textarea></br>
+  <button>Save Changes</button>
+</form>
+
+<%- include ../__footer.ejs %>
