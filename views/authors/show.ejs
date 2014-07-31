@@ -1,5 +1,10 @@
 <%- include ../__header.ejs %>
-
+<% if (!isAuthenticated) { %>
+  <p class="mustlogin">You must be logged in to view this page</br>
+    <a href="/login">Login here</a>
+    <a href="/signup">Sign Up</a>
+  </p>
+<% } else { %>
   <h2 class="subtitle">Author Details</h2>
 
   <div class="allblogs">
@@ -14,5 +19,5 @@
 
   <form class="delete" method="post" action="/author/<%= author.dataValues.id %>?_method=delete"><button class="btn btn-danger">Delete <%= author.dataValues.username %></button></form>
   </div>
-
+<% } %>
 <%- include ../__footer.ejs %>

@@ -46,7 +46,7 @@ passport.deserializeUser(function(id, done) {
 
 
 app.get('/', function(req, res) {
-  res.render('index', {
+  res.render('index', {isAuthenticated: req.isAuthenticated(),
   author: req.author});
 });
 
@@ -69,14 +69,14 @@ app.get('/login', function(req, res) {
 
 app.get('/authors', function(req, res) {
   db.author.findAll({order: [['createdAt', 'DESC']]}).success(function(allAuthors) {
-    res.render('authors/index', { 
+    res.render('authors/index', { isAuthenticated: req.isAuthenticated(),
     authors: allAuthors});
   });
 });
 
 app.get('/blogs', function(req, res) {
   db.post.findAll({order: [['createdAt', 'DESC']]}).success(function(allPosts) {
-    res.render('posts/index', {
+    res.render('posts/index', {isAuthenticated: req.isAuthenticated(),
     post: req.post, posts: allPosts});
   });
 });
@@ -84,7 +84,7 @@ app.get('/blogs', function(req, res) {
 app.get('/authors/:id', function(req, res) {
   db.author.find(req.params.id).success(function(foundAuthor) {
     foundAuthor.getPosts().success(function(foundPosts) {
-      res.render("authors/show", {
+      res.render("authors/show", {isAuthenticated: req.isAuthenticated(),
       author: foundAuthor, posts: foundPosts});
     });
   });
@@ -92,21 +92,21 @@ app.get('/authors/:id', function(req, res) {
 
 app.get('/posts/:id', function(req, res) {
   db.post.find(req.params.id).success(function(foundPost) {
-    res.render("posts/show", {
+    res.render("posts/show", {isAuthenticated: req.isAuthenticated(),
     post: foundPost});
   });
 });
 
 app.get('/posts/:id/edit', function(req, res) {
   db.post.find(req.params.id).success(function(foundPost) {
-    res.render('posts/edit', {
+    res.render('posts/edit', {isAuthenticated: req.isAuthenticated(),
     post: foundPost})
   })
 })
 
 app.get('/authors/:id/posts/new', function(req, res) {
   db.author.find(req.params.id).success(function(foundAuthor) {
-    res.render("posts/new", {
+    res.render("posts/new", {isAuthenticated: req.isAuthenticated(),
     author: foundAuthor});
   });
 });
@@ -114,16 +114,16 @@ app.get('/authors/:id/posts/new', function(req, res) {
 app.post('/authors', function(req, res) {
   db.author.createNewUser(req.body.username, req.body.password, 
   function(err){
-    res.render("authors/new_author", {message: err.message, username: req.body.username});
+    res.render("authors/new_author", {username: req.body.username});
   }, 
   function(success){
-    res.render("index", {
+    res.render("index", {isAuthenticated: req.isAuthenticated(),
     message: success.message});
   });
 });
 
 app.post('/login', passport.authenticate('local', {
-  successRedirect: '/authors',
+  successRedirect: '/authors', 
   failureRedirect: '/login',
   failureFlash: true
 }));

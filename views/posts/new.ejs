@@ -1,5 +1,10 @@
 <%- include ../__header.ejs %>
-
+<% if (!isAuthenticated) { %>
+  <p class="mustlogin">You must be logged in to view this page</br>
+    <a href="/login">Login here</a>
+    <a href="/signup">Sign Up</a>
+  </p>
+<% } else { %>
   <h2 class="subtitle">New Post</h2>
   <form class="editform" method="POST" action="/authors/<%= author.dataValues.id %>/posts">
     <input class="edittitle" type="text" name="post[title]" placeholder="Blog Title"><br>
@@ -7,5 +12,5 @@
     </textarea><br>
     <button class="btn btn-danger authorbtn"> SAVE POST </button>
   </form>
-
+<% } %>
 <%- include ../__footer.ejs %>

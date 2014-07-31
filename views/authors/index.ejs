@@ -1,5 +1,11 @@
 <%- include ../__header.ejs %>
 
+<% if (!isAuthenticated) { %>
+  <p class="mustlogin">You must be logged in to view this page</br>
+    <a href="/login">Login here</a>
+    <a href="/signup">Sign Up</a>
+  </p>
+<% } else { %>
   <h2 class="subtitle">All Authors</h2>
   <div class="all">
   <ul>
@@ -8,5 +14,5 @@
     <% }) %>
   </ul>
   </div>
-
+<% } %>
 <%- include ../__footer.ejs %>
