@@ -75,7 +75,7 @@ module.exports = function (sequelize, DataTypes){
         console.log(error)
         return done(err, req.flash('loginMessage', 'Oops! Something went wrong...'))
       }
-      if (user === null) {
+      if (author === null) {
         return done(null, false, req.flash('loginMessage', 'Username does not exist'))
       }
       if((Author.comparePass(password, author.password)) !== true) {

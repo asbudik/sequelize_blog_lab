@@ -1,13 +1,9 @@
 <%- include ../__header.ejs %>
-<% if (!isAuthenticated) { %>
-  <p class="mustlogin">You must be logged in to view this page</br>
-    <a href="/login">Login here</a>
-  </p>
-<% } else { %>
+
   <h2 class="subtitle">Author Details</h2>
 
   <div class="allblogs">
-  <h2> <%= author.dataValues.firstname %></h2>
+  <h2> <%= author.dataValues.username %></h2>
   <ul>
     <% posts.forEach(function(post){ %>
       <h3 class="allauthorposts"><li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li></h3>
@@ -16,7 +12,7 @@
 
    <a href="/authors/<%= author.dataValues.id %>/posts/new"><button class="btn btn-danger"> New Post </button></a>
 
-  <form class="delete" method="post" action="/author/<%= author.dataValues.id %>?_method=delete"><button class="btn btn-danger">Delete <%= author.dataValues.firstname %></button></form>
+  <form class="delete" method="post" action="/author/<%= author.dataValues.id %>?_method=delete"><button class="btn btn-danger">Delete <%= author.dataValues.username %></button></form>
   </div>
-<% } %>
+
 <%- include ../__footer.ejs %>

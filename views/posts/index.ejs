@@ -1,10 +1,5 @@
 <%- include ../__header.ejs %>
-<% if (!isAuthenticated) { %>
-  <p class="mustlogin">You must be logged in to view this page</br>
-    <a href="/login">Login here</a>
-  </p>
-<% } else { %>
-  <h4 class="username">Hello, <%= author.username %></h4>
+
   <h2 class="subtitle">All Blogs</h2>
   <div class="all"><ul>
     <% posts.forEach(function(post){ %>
@@ -12,5 +7,5 @@
     <% }) %>
   </ul>
   </div>
-<% } %>
+
 <%- include ../__footer.ejs %>

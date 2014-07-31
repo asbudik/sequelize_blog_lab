@@ -46,13 +46,13 @@ passport.deserializeUser(function(id, done) {
 
 
 app.get('/', function(req, res) {
-  res.render('index', {isAuthenticated: req.isAuthenticated(),
+  res.render('index', {
   author: req.author});
 });
 
 app.get('/signup', function(req, res) {
   if(!req.author) {
-    res.render("new_author");
+    res.render("authors/new_author");
   } else {
     res.redirect('/')
   }
@@ -60,7 +60,8 @@ app.get('/signup', function(req, res) {
 
 app.get('/login', function(req, res) {
   if (!req.author) {
-    res.render("login");
+    res.render("authors/login", {
+      author: req.author});
   } else {
     res.redirect('/');
   }
@@ -68,27 +69,22 @@ app.get('/login', function(req, res) {
 
 app.get('/authors', function(req, res) {
   db.author.findAll({order: [['createdAt', 'DESC']]}).success(function(allAuthors) {
-    res.render('authors/index', {isAuthenticated: req.isAuthenticated(), 
-    author: req.author, authors: allAuthors});
+    res.render('authors/index', { 
+    authors: allAuthors});
   });
 });
 
 app.get('/blogs', function(req, res) {
   db.post.findAll({order: [['createdAt', 'DESC']]}).success(function(allPosts) {
-    res.render('posts/index', {isAuthenticated: req.isAuthenticated(), 
-    post: req.posts, posts: allPosts});
+    res.render('posts/index', {
+    post: req.post, posts: allPosts});
   });
 });
-
-app.get('/login', function(req, res) {
-  res.render('authors/new_author', {isAuthenticated: req.isAuthenticated(),
-    author: req.author})
-})
 
 app.get('/authors/:id', function(req, res) {
   db.author.find(req.params.id).success(function(foundAuthor) {
     foundAuthor.getPosts().success(function(foundPosts) {
-      res.render("authors/show", {isAuthenticated: req.isAuthenticated(),
+      res.render("authors/show", {
       author: foundAuthor, posts: foundPosts});
     });
   });
@@ -96,21 +92,21 @@ app.get('/authors/:id', function(req, res) {
 
 app.get('/posts/:id', function(req, res) {
   db.post.find(req.params.id).success(function(foundPost) {
-    res.render("posts/show", {isAuthenticated: req.isAuthenticated(),
+    res.render("posts/show", {
     post: foundPost});
   });
 });
 
 app.get('/posts/:id/edit', function(req, res) {
   db.post.find(req.params.id).success(function(foundPost) {
-    res.render('posts/edit', {isAuthenticated: req.isAuthenticated(),
+    res.render('posts/edit', {
     post: foundPost})
   })
 })
 
 app.get('/authors/:id/posts/new', function(req, res) {
   db.author.find(req.params.id).success(function(foundAuthor) {
-    res.render("posts/new", {isAuthenticated: req.isAuthenticated(),
+    res.render("posts/new", {
     author: foundAuthor});
   });
 });
@@ -118,11 +114,23 @@ app.get('/authors/:id/posts/new', function(req, res) {
 app.post('/authors', function(req, res) {
   db.author.createNewUser(req.body.username, req.body.password, 
   function(err){
-    res.render("new_author", {message: err.message, username: req.body.username});
+    res.render("authors/new_author", {message: err.message, username: req.body.username});
   }, 
   function(success){
-    res.render("index", {message: success.message});
+    res.render("index", {
+    message: success.message});
   });
+});
+
+app.post('/login', passport.authenticate('local', {
+  successRedirect: '/authors',
+  failureRedirect: '/login',
+  failureFlash: true
+}));
+
+app.get('/logout', function(req,res){
+  req.logout();
+  res.redirect('/');
 });
 
 app.post('/authors/:id/posts', function(req, res) {
