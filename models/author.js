@@ -73,7 +73,7 @@ module.exports = function (sequelize, DataTypes){
     .done(function(error, author){
       if(error){
         console.log(error)
-        return done(err, req.flash('loginMessage', 'Oops! Something went wrong...'))
+        return done(error, req.flash('loginMessage', 'Oops! Something went wrong...'))
       }
       if (author === null) {
         return done(null, false, req.flash('loginMessage', 'Username does not exist'))

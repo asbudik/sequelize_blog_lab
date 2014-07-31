@@ -52,7 +52,7 @@ app.get('/', function(req, res) {
 
 app.get('/signup', function(req, res) {
   if(!req.author) {
-    res.render("authors/new_author");
+    res.render("authors/new_author", {username: ""});
   } else {
     res.redirect('/')
   }

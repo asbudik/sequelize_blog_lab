@@ -2,18 +2,18 @@
 <h1>Login</h1>
 <h2 style="color:red"></h2>
 
-<form action="/login" method = "post">
+<form class="editform" action="/login" method = "post">
   <p>
-    <label for="user">Username:</label> <input type="text" name="username" id="user" placeholder="username" autofocus>
+    <label for="user">Username:</label> <input class="edittitle" type="text" name="username" id="user" placeholder="username" autofocus>
   </p>
   <p>
-    <label for="pass">Password:</label> <input type="password" name="password" id="pass" placeholder="*******">
+    <label for="pass">Password:</label> <input class="edittitle" type="password" name="password" id="pass" placeholder="*******">
   </p>
   <p>
-    <input type="submit" value="Log In">
+    <button class="btn btn-danger authorbtn"> Login </button>  
   </p>
-</form>
-<a href="/signup">Don't have an account? Create one here</a>
+  <a href="/signup">Don't have an account? Create one here</a>
 
+</form>
 
 <%- include ../__footer.ejs %>

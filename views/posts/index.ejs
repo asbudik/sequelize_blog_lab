@@ -9,7 +9,7 @@
   <h2 class="subtitle">All Blogs</h2>
   <div class="all"><ul>
     <% posts.forEach(function(post){ %>
-      <h1 class="generatelist"><li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li></h1>
+      <h3 class="generatelist"><li> <a href="/posts/<%= post.dataValues.id %>" ><%= post.dataValues.title %></a></li></h3>
     <% }) %>
   </ul>
   </div>

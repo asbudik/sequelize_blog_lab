@@ -81,8 +81,8 @@ a:hover {
   padding: 5px;
 }
 .edittitle:focus, .editbody:focus {
-  border-color: #b20000;
   outline: none;
+  box-shadow: 0 0 3px 1px #660000;
 }
 .edittitle {
   height: 50px;
@@ -90,6 +90,7 @@ a:hover {
 }
 .editbody {
   height: 300px;
+  border: 1px solid #b20000;
 }
 .editform {
   width: 500px;
@@ -117,6 +118,7 @@ a:hover {
   ;
 }
 .allauthorposts {
+  font-size: 20px;
   position: relative;
   line-height: 6px;
   left: -42px;
