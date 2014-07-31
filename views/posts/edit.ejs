@@ -1,10 +1,14 @@
 <%- include ../__header.ejs %>
-
-<h2 class="subtitle">Edit</h2>
-<form class="editform" method="post" action="/posts/<%= post.dataValues.id %>?_method=put">
-  <input class="edittitle" type="text" name="post[title]" value="<%= post.dataValues.title %>">
-  <textarea class="editbody" name="post[body]"><%= post.dataValues.body %></textarea></br>
-  <button class="btn btn-danger authorbtn">Save Changes</button>
-</form>
-
+<% if (!isAuthenticated) { %>
+  <p class="mustlogin">You must be logged in to view this page</br>
+    <a href="/login">Login here</a>
+  </p>
+<% } else { %>
+  <h2 class="subtitle">Edit</h2>
+  <form class="editform" method="post" action="/posts/<%= post.dataValues.id %>?_method=put">
+    <input class="edittitle" type="text" name="post[title]" value="<%= post.dataValues.title %>">
+    <textarea class="editbody" name="post[body]"><%= post.dataValues.body %></textarea></br>
+    <button class="btn btn-danger authorbtn">Save Changes</button>
+  </form>
+<% } %>
 <%- include ../__footer.ejs %>

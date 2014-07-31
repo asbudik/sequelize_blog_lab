@@ -1,13 +1,19 @@
 <%- include ../__header.ejs %>
-<h2 class="subtitle">Blog Details</h2>
-
-<div class="allblogs">
-  <h2> <%= post.dataValues.title %> </h2>
-  <p>
-    <%= post.dataValues.body %>
+<% if (!isAuthenticated) { %>
+  <p class="mustlogin">You must be logged in to view this page</br>
+    <a href="/login">Login here</a>
   </p>
+<% } else { %>
+  <h2 class="subtitle">Blog Details</h2>
 
-  <a class="editblog" href="/posts/<%= post.dataValues.id %>/edit"><button class="btn btn-danger">Edit Post</button>
-  <form method="post" action="/posts/<%= post.dataValues.id %>?_method=delete"><button class="btn btn-danger delete-button">DELETE</button></form>
-</div>
+  <div class="allblogs">
+    <h2> <%= post.dataValues.title %> </h2>
+    <p>
+      <%= post.dataValues.body %>
+    </p>
+
+    <a class="editblog" href="/posts/<%= post.dataValues.id %>/edit"><button class="btn btn-danger">Edit Post</button>
+    <form method="post" action="/posts/<%= post.dataValues.id %>?_method=delete"><button class="btn btn-danger delete-button">DELETE</button></form>
+  </div>
+<% } %>
 <%- include ../__footer.ejs %>

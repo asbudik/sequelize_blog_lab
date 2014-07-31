@@ -1,64 +1,127 @@
 var express = require("express"),
-  db = require("./models/index.js"),
   bodyParser = require("body-parser"),
+  passport = require("passport"),
+  passportLocal = require("passport-local"),
+  cookieParser = require("cookie-parser"),
+  cookieSession = require("cookie-session"),
+  flash = require("connect-flash"),
   methodOverride = require("method-override"),
-  app = express();
+  app = express(),
+  db = require("./models/index.js");
 
 app.set("view engine", "ejs");
 
 app.use(express.static(__dirname + '/public'));
-app.use(bodyParser.urlencoded());
+
+app.use(bodyParser.urlencoded({extended: true}));
+app.use(cookieParser());
+app.use(cookieSession({
+  secret: 'blogcentralasdf',
+  name: 'blog central cookie',
+  maxage: 300000
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
 app.use(methodOverride("_method"));
 
+
+passport.serializeUser(function(author, done) {
+  console.log("SERIALIZED");
+  done(null, author.id);
+})
+
+passport.deserializeUser(function(id, done) {
+  console.log("DESERIALIZED");
+  db.author.find({
+    where: {
+      id: id
+    }
+  }).done(function(error, user) {
+    done(error, user)
+  })
+})
+
+
 app.get('/', function(req, res) {
-  res.render('index')
+  res.render('index', {isAuthenticated: req.isAuthenticated(),
+  author: req.author});
 });
 
-app.get('/authors/new_author', function(req, res) {
-  res.render('authors/new_author')
+app.get('/signup', function(req, res) {
+  if(!req.author) {
+    res.render("new_author");
+  } else {
+    res.redirect('/')
+  }
+});
+
+app.get('/login', function(req, res) {
+  if (!req.author) {
+    res.render("login");
+  } else {
+    res.redirect('/');
+  }
 })
 
 app.get('/authors', function(req, res) {
   db.author.findAll({order: [['createdAt', 'DESC']]}).success(function(allAuthors) {
-    res.render('authors/index', {authors: allAuthors});
+    res.render('authors/index', {isAuthenticated: req.isAuthenticated(), 
+    author: req.author, authors: allAuthors});
   });
 });
 
 app.get('/blogs', function(req, res) {
   db.post.findAll({order: [['createdAt', 'DESC']]}).success(function(allPosts) {
-    res.render('posts/index', {posts: allPosts});
+    res.render('posts/index', {isAuthenticated: req.isAuthenticated(), 
+    post: req.posts, posts: allPosts});
   });
 });
+
+app.get('/login', function(req, res) {
+  res.render('authors/new_author', {isAuthenticated: req.isAuthenticated(),
+    author: req.author})
+})
 
 app.get('/authors/:id', function(req, res) {
   db.author.find(req.params.id).success(function(foundAuthor) {
     foundAuthor.getPosts().success(function(foundPosts) {
-      res.render("authors/show", {author: foundAuthor, posts: foundPosts});
+      res.render("authors/show", {isAuthenticated: req.isAuthenticated(),
+      author: foundAuthor, posts: foundPosts});
     });
   });
 });
 
 app.get('/posts/:id', function(req, res) {
   db.post.find(req.params.id).success(function(foundPost) {
-    res.render("posts/show", {post: foundPost});
+    res.render("posts/show", {isAuthenticated: req.isAuthenticated(),
+    post: foundPost});
   });
 });
 
 app.get('/posts/:id/edit', function(req, res) {
   db.post.find(req.params.id).success(function(foundPost) {
-    res.render('posts/edit', {post: foundPost})
+    res.render('posts/edit', {isAuthenticated: req.isAuthenticated(),
+    post: foundPost})
   })
 })
 
 app.get('/authors/:id/posts/new', function(req, res) {
   db.author.find(req.params.id).success(function(foundAuthor) {
-    res.render("posts/new", {author: foundAuthor});
+    res.render("posts/new", {isAuthenticated: req.isAuthenticated(),
+    author: foundAuthor});
   });
 });
 
 app.post('/authors', function(req, res) {
-  db.author.create(req.body.author).success(function() {
-    res.redirect('/authors');
+  db.author.createNewUser(req.body.username, req.body.password, 
+  function(err){
+    res.render("new_author", {message: err.message, username: req.body.username});
+  }, 
+  function(success){
+    res.render("index", {message: success.message});
   });
 });
 
